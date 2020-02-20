@@ -11,8 +11,8 @@ class App extends Component {
    
       <div >
       
-    {console.log(generatePalette(seedColors[4]))}
-      <Palette {...seedColors[4]} />
+    
+      <Palette palette={generatePalette(seedColors[3])} />
       </div>
       
    
