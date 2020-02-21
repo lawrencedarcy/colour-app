@@ -65,7 +65,7 @@ class Navbar extends Component {
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
           open={this.state.open}
-          autoHideDuration={1700}
+          autoHideDuration={2100}
           onClose={() => this.setState({open: false})}
     message={<span id="message-id">Format changed to {this.state.default.toUpperCase()}</span>}
           

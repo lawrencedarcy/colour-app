@@ -12,7 +12,7 @@ class App extends Component {
       <div >
       
     
-      <Palette palette={generatePalette(seedColors[3])} />
+      <Palette palette={generatePalette(seedColors[1])} />
       </div>
       
    
