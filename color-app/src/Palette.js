@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import ColorBox from "./ColorBox";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 
 import "./Palette.css";
-
-
 
 class Palette extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       level: 500,
-    format: "hex"
-   };
+      format: "hex"
+    };
     this.changeLevel = this.changeLevel.bind(this);
     this.changeFormat = this.changeFormat.bind(this);
   }
@@ -21,19 +19,23 @@ class Palette extends Component {
     this.setState({ level: newLevel });
   }
 
-  changeFormat(val){
-    this.setState({format: val});
+  changeFormat(val) {
+    this.setState({ format: val });
   }
 
   render() {
-    const {colors} = this.props.palette;
-    const {level, format} = this.state;
-    const colorBoxes = colors[
-      this.state.level
-    ].map(color => <ColorBox background={color[format]} name={color.name} />);
+    const { colors } = this.props.palette;
+    const { level, format } = this.state;
+    const colorBoxes = colors[this.state.level].map(color => (
+      <ColorBox background={color[format]} name={color.name} />
+    ));
     return (
       <div className="Palette">
-        <Navbar handleChange={this.changeFormat} level={level} changeLevel={this.changeLevel}/>
+        <Navbar
+          handleChange={this.changeFormat}
+          level={level}
+          changeLevel={this.changeLevel}
+        />
         <div className="Palette-colors">{colorBoxes}</div>
       </div>
     );
