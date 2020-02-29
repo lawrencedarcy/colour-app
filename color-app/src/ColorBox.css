@@ -73,20 +73,6 @@
 
 }
 
-.see-more {
-  background-color: rgba(255, 255, 255, 0.3);
-  position: absolute;
-  border: none;
-  bottom: 0;
-  right: 0;
-  color: white;
-  width: 60px;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-  text-transform: uppercase;
-}
-
 
 .copy-overlay {
   opacity: 0;

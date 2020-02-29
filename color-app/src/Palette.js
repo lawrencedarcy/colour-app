@@ -30,7 +30,7 @@ class Palette extends Component {
       <ColorBox 
       background={color[format]} 
       name={color.name} 
-      showLink={true}
+      showingFullPalette={true}
       key={color.id} 
       id={color.id} 
       paletteId={id} />
