@@ -22,7 +22,7 @@ const styles = {
     border: 'none',
     bottom: '0',
     right: '0',
-    
+    fontSize:' 0.8rem',
     width: '60px',
     height: '30px',
     textAlign: 'center',
@@ -51,6 +51,30 @@ const styles = {
   textDecoration: 'none',
   cursor: 'pointer',
   letterSpacing: '2px'
+  
+  } ,
+
+  boxContent: {
+
+    padding: '10px',
+    width: '100%',
+    left: '0',
+    bottom: '0',
+    position: 'absolute',
+    color: 'rgba(0, 0, 0, 0.973)',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    fontSize: '0.65rem'
+  },
+  
+  copyOverlay: {
+    opacity: '0',
+    zIndex: '0',
+    width: '100%',
+    height: '100%',
+    opacity: '0',
+    transition: 'transform 1.1s ease-in-out',
+    transform: 'scale(0.01)'
   },
 
   ColorBox: {
@@ -61,11 +85,62 @@ const styles = {
     cursor: 'pointer',
     position: 'relative',
     marginBottom: '-4.5px',
-    '&hover button': {
+    '&:hover button': {
       opacity: 1
-    } 
-  }
+    }
+    
+  },
 
+ showOverlay: {
+    position: 'absolute',
+    zIndex: '10',
+    opacity: '0.96',
+    transform: 'scale(50)'
+  },
+
+
+copyMessage: {
+
+  position: 'fixed',
+  left:'0',
+  right: '0',
+  top: '0',
+  bottom: '0',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '2rem',
+  transform: 'scale(0.1)',
+  color: 'rgba(255, 255, 255, 0.945)',
+  opacity: '0',
+  textTransform: 'uppercase',
+  flexDirection: 'column',
+
+
+  "& h1": {
+
+  fontWeight: '300',
+  textShadow: '1px 2px rgba(0, 0, 0, 0.925)',
+  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  width: '100%',
+  textAlign: 'center',
+  marginBottom: '0',
+  padding: '1rem',
+  textTransform: 'uppercase'}
+, 
+"& p": {
+  fontSize: '1.5rem'
+}
+
+},
+
+showMessage: {
+  opacity: '1',
+  transform:' scale(1)',
+  zIndex: '25',
+  transition: 'all 0.3 ease-in-out',
+  transitionDelay: '0.4s'
+},
 
 };
 
@@ -95,16 +170,16 @@ class ColorBox extends Component {
         <div style={{ background }} className={classes.ColorBox}>
           <div
             style={{ background }}
-            className={`copy-overlay ${copied && 'show'}`}
+            className={`${classes.copyOverlay} ${copied && classes.showOverlay}`}
           />
-          <div className={`copy-msg ${copied && 'show'}`}>
+          <div className={`${classes.copyMessage} ${copied && classes.showMessage}`}>
             <h1>Copied to clipboard</h1>
             <p className={classes.copyText}>
               {background}
             </p>
           </div>
-          <div className='copy-container'>
-            <div className='box-content'>
+          <div>
+            <div className={classes.boxContent}>
               <span className={classes.colorName}>{name}</span>
             </div>
             <button className={classes.copyButton}>
