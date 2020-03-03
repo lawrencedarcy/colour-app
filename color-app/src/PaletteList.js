@@ -5,37 +5,8 @@ import MiniPalette from "./MiniPalette";
 import { withStyles } from "@material-ui/styles";
 import { blue } from "@material-ui/core/colors";
 import { flexbox } from "@material-ui/system";
+import styles from './styles/PaletteListStyles'
 
-const styles = {
-  root: {
-    height: '100%',
-    backgroundColor: 'blue',
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
-  container: {
-    display: 'flex',
-    width: '60%',
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-    flexWrap: 'wrap'
-    
-  },
-  nav: {
-      display: 'flex',
-      width: '100%',
-      justifyContent: 'space-between',
-      color: 'white'
-  },
-  palettes: {
-    boxSizing: 'border-box',
-    width: "100%",
-    display: "grid",
-    gridTemplateColumns: 'repeat(3, 30%)',
-    gridGrap: '5%'
-  }
-};
 
 class PaletteList extends Component {
 
