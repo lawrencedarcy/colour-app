@@ -21,7 +21,14 @@ export default {
   nav: {
       display: 'flex',
       width: '100%',
+      
       justifyContent: 'space-between',
+      alignItems: 'center',
+      color: 'white',
+      "& a": {
+        color: 'white',
+        textDecoration: 'none'
+      }
      
   },
   palettes: {
@@ -29,6 +36,6 @@ export default {
     width: "100%",
     display: "grid",
     gridTemplateColumns: 'repeat(3, 30%)',
-    gridGrap: '5%'
+    gridGap: '4%'
   }
 };
