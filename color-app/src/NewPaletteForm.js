@@ -16,6 +16,10 @@ import { ValidatorForm, TextValidator} from "react-material-ui-form-validator";
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import DraggableColorList from './DraggableColorList';
 import { arrayMove } from 'react-sortable-hoc';
+import seedColors from './seedColors';
+import chroma from "chroma-js";
+import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
+
 
 
 const drawerWidth = 300;
@@ -94,6 +98,17 @@ class NewPaletteForm extends Component {
     this.addNewColor = this.addNewColor.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.removeColor = this.removeColor.bind(this);
+    this.clearColors = this.clearColors.bind(this);
+    this.randomColor = this.randomColor.bind(this);
+  }
+
+  componentDidMount(){
+    ValidatorForm.addValidationRule('isColorNameUnique', (value) => 
+    
+      this.state.colors.every(
+        ({ name }) => name.toLowerCase() !== value.toLowerCase()
+      )
+    )
   }
 
   updateCurrentColor(newColor) {
@@ -143,7 +158,19 @@ class NewPaletteForm extends Component {
       colors: this.state.colors.filter(color => color.name !== colorName)
     })
   }
+
+  clearColors () {
+    this.setState({colors: []})
+  }
   
+  randomColor () {
+    const colorR = {color: chroma.random(), name: uniqueNamesGenerator({
+      dictionaries: [colors, adjectives, animals]
+    })}
+    console.log(colorR);
+    this.setState({colors: [...this.state.colors, colorR ]})
+
+  }
 
   render() {
     const { classes } = this.props;
@@ -201,11 +228,15 @@ class NewPaletteForm extends Component {
         >
           <Divider />
           <Typography variant="h5">Design your palette</Typography>
-          <div><Button variant="contained" color="secondary">Clear palette</Button>
+          <div>
+            <Button variant="contained" color="secondary" onClick={this.clearColors}>
+              Clear palette</Button>
           <Button 
           style={{backgroundColor: this.state.currentColor}}
           variant="contained" 
-          color="primary">Random colour</Button></div>
+          color="primary"
+          onClick={this.randomColor}
+          >Random colour</Button></div>
           
 
           <ChromePicker color={this.state.currentColor}  onChangeComplete={this.updateCurrentColor} />
@@ -215,8 +246,8 @@ class NewPaletteForm extends Component {
             value={this.state.newColorName} 
             name="newColorName"
             onChange={this.handleFormChange}
-            validators={["required"]}
-            errorMessages={["Please add a name"]}
+            validators={["required", 'isColorNameUnique']}
+            errorMessages={["Please add a name", "That name is taken."]}
             />
           
           <Button 
