@@ -13,6 +13,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/button"
 import { ChromePicker } from 'react-color';
 import DraggableColorBox from './DraggableColorBox';
+import { ValidatorForm, TextValidator} from "react-material-ui-form-validator";
 const drawerWidth = 360;
 
 const styles = theme => ({
@@ -79,12 +80,14 @@ class NewPaletteForm extends Component {
     super(props);
     this.state = {
       open: true, 
-      currentColor: 'teal',
-      colors: ['purple', 'red']
+      currentColor: '',
+      colors: [],
+      newName: ""
     }
-
+    this.savePalette = this.savePalette.bind(this);
     this.updateCurrentColor = this.updateCurrentColor.bind(this);
     this.addNewColor = this.addNewColor.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
   }
 
   updateCurrentColor(newColor) {
@@ -92,7 +95,8 @@ class NewPaletteForm extends Component {
   }
 
   addNewColor() {
-    this.setState({colors: [...this.state.colors, this.state.currentColor]})
+    const newColor = {color: this.state.currentColor, name: this.state.newName}
+    this.setState({colors: [...this.state.colors, newColor]})
   }
 
   handleDrawerOpen = () => {
@@ -103,6 +107,21 @@ class NewPaletteForm extends Component {
     this.setState({ open: false });
   };
 
+  handleFormChange(e) {
+    this.setState({newName: e.target.value});
+  }
+
+  savePalette (){
+    let newName = "Test palette";
+    const newPalette = {
+      paletteName: newName, 
+      colors: this.state.colors, 
+      id: newName.toLowerCase().replace(/ /g, '-') }
+    this.props.savePalette(newPalette);
+    this.props.history.push('/');
+
+  }
+ 
   
 
   render() {
@@ -114,6 +133,7 @@ class NewPaletteForm extends Component {
         <CssBaseline />
         <AppBar
           position='fixed'
+          color="default"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open
           })}
@@ -128,8 +148,9 @@ class NewPaletteForm extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant='h6' color='inherit' noWrap>
-              Persistent drawer
+              Create a new palette
             </Typography>
+            <Button variant="contained" color="primary" onClick={this.savePalette}>Save palette</Button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -151,14 +172,26 @@ class NewPaletteForm extends Component {
           
 
           <ChromePicker color={this.state.currentColor}  onChangeComplete={this.updateCurrentColor} />
+          <ValidatorForm onSubmit={this.addNewColor}> 
+
+            <TextValidator 
+            value={this.state.newName} 
+            onChange={this.handleFormChange}
+            validators={["required"]}
+            errorMessages={["Please add a name"]}
+            />
+          
           <Button 
+            type="submit"
             variant="contained" 
             color='primary'
             style={{backgroundColor: this.state.currentColor}}
-            onClick={this.addNewColor}
+            
             >
               
               Add colour</Button>
+          </ValidatorForm>
+          
           <div className={classes.drawerHeader}>
           
 
@@ -177,7 +210,7 @@ class NewPaletteForm extends Component {
 
           
             {this.state.colors.map(color => (
-            <DraggableColorBox color={color} />
+            <DraggableColorBox color={color.color} name={color.name} />
               ))}
          
           
