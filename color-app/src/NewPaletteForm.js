@@ -1,10 +1,8 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,10 +14,10 @@ import { ValidatorForm, TextValidator} from "react-material-ui-form-validator";
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import DraggableColorList from './DraggableColorList';
 import { arrayMove } from 'react-sortable-hoc';
-import seedColors from './seedColors';
 import chroma from "chroma-js";
+import PaletteFormNav from './PaletteFormNav';
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
-
+// https://www.npmjs.com/package/unique-names-generator
 
 
 const drawerWidth = 300;
@@ -91,7 +89,7 @@ class NewPaletteForm extends Component {
       currentColor: 'teal',
       colors: [{color: "blue", name: "blue"}],
       newColorName: '',
-      newPaletteName: ''
+      
     }
     this.savePalette = this.savePalette.bind(this);
     this.updateCurrentColor = this.updateCurrentColor.bind(this);
@@ -142,12 +140,11 @@ class NewPaletteForm extends Component {
     });
   }
 
-  savePalette (){
-    let newColorName = this.state.newPaletteName;
+  savePalette (newPaletteName){
     const newPalette = {
-      paletteName: newColorName, 
+      paletteName: newPaletteName, 
       colors: this.state.colors, 
-      id: newColorName.replace(/ /g, '-') }
+      id: newPaletteName.replace(/ /g, '-') }
     this.props.savePalette(newPalette);
     this.props.history.push('/');
 
@@ -165,7 +162,7 @@ class NewPaletteForm extends Component {
   
   randomColor () {
     const colorR = {color: chroma.random(), name: uniqueNamesGenerator({
-      dictionaries: [colors, adjectives, animals]
+      dictionaries: [adjectives, animals], length: 2
     })}
     console.log(colorR);
     this.setState({colors: [...this.state.colors, colorR ]})
@@ -178,45 +175,12 @@ class NewPaletteForm extends Component {
 
     return (
       <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position='fixed'
-          color="default"
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: open
-          })}
-        >
-          <Toolbar disableGutters={!open}>
-            <IconButton
-              color='inherit'
-              aria-label='Open drawer'
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6' color='inherit' noWrap>
-              Create a new palette
-            </Typography>
-            <ValidatorForm onSubmit={this.savePalette}>
-            <TextValidator 
-            value={this.state.newPaletteName}
-             label="Palette Name" 
-             onChange={this.handleFormChange}
-             name="newPaletteName"
-             validators={["required"]}
-             errorMessages={['Please enter a palette name']} />
-
-            <Button
-            type="submit" 
-            variant="contained" 
-            color="primary" 
-            >
-              Save palette
-              </Button>
-              </ValidatorForm>
-          </Toolbar>
-        </AppBar>
+        <PaletteFormNav 
+          open={open} 
+          classes={classes} 
+          handleSubmit={this.savePalette}
+          handleDrawerOpen={this.handleDrawerOpen}
+          />
         <Drawer
           className={classes.drawer}
           variant='persistent'
