@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ColorPickerForm from './ColorPickerForm';
 import { Link } from 'react-router-dom';
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -88,11 +89,10 @@ class NewPaletteForm extends Component {
       open: true, 
       currentColor: 'teal',
       colors: [{color: "blue", name: "blue"}],
-      newColorName: '',
+      
       
     }
     this.savePalette = this.savePalette.bind(this);
-    this.updateCurrentColor = this.updateCurrentColor.bind(this);
     this.addNewColor = this.addNewColor.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.removeColor = this.removeColor.bind(this);
@@ -109,12 +109,8 @@ class NewPaletteForm extends Component {
     )
   }
 
-  updateCurrentColor(newColor) {
-    this.setState({currentColor: newColor.hex})
-  }
-
-  addNewColor() {
-    const newColor = {color: this.state.currentColor, name: this.state.newColorName}
+ 
+  addNewColor(newColor) {
     this.setState({colors: [...this.state.colors, newColor]})
   }
 
@@ -202,39 +198,17 @@ class NewPaletteForm extends Component {
           onClick={this.randomColor}
           >Random colour</Button></div>
           
-
-          <ChromePicker color={this.state.currentColor}  onChangeComplete={this.updateCurrentColor} />
-          <ValidatorForm onSubmit={this.addNewColor}> 
-
-            <TextValidator 
-            value={this.state.newColorName} 
-            name="newColorName"
-            onChange={this.handleFormChange}
-            validators={["required", 'isColorNameUnique']}
-            errorMessages={["Please add a name", "That name is taken."]}
-            />
-          
-          <Button 
-            type="submit"
-            variant="contained" 
-            color='primary'
-            style={{backgroundColor: this.state.currentColor}}
-            
-            >
-              
-              Add colour</Button>
-          </ValidatorForm>
-          
+          <ColorPickerForm addNewColor={this.addNewColor}/>
           <div className={classes.drawerHeader}>
           
 
-            <IconButton onClick={this.handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          
+          <IconButton onClick={this.handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
         </Drawer>
-
+          
+        
         <main
           className={classNames(classes.content, {
             [classes.contentShift]: open
