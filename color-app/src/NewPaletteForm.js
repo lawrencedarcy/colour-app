@@ -34,7 +34,9 @@ const styles = theme => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    display: "flex",
+    alignItems: "center"
   },
   drawerHeader: {
     display: "flex",
@@ -59,6 +61,20 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
+  },
+  container: {
+    width: "90%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%"
+  },
+  buttons: {
+    width: "100%"
+  },
+  button: {
+    width: "50%"
   }
 });
 
@@ -167,12 +183,17 @@ class NewPaletteForm extends Component {
           }}
         >
           <Divider />
-          <Typography variant="h5">Design your palette</Typography>
-          <div>
-            <Button variant="contained" color="secondary" onClick={this.clearColors}>
+          <div className={classes.container}>
+          <Typography variant="h5" gutterBottom>Design your palette</Typography>
+          <div className={classes.buttons}>
+            <Button 
+            className={classes.button}
+            variant="contained" color="secondary" 
+            onClick={this.clearColors}>
               Clear palette</Button>
           <Button 
           style={{backgroundColor: this.state.currentColor}}
+          className={classes.button}
           variant="contained" 
           color="primary"
           onClick={this.randomColor}
@@ -185,6 +206,7 @@ class NewPaletteForm extends Component {
           <IconButton onClick={this.handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
+        </div>
         </div>
         </Drawer>
           
