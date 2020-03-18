@@ -1,24 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/button"
 import { ChromePicker } from 'react-color';
 import { ValidatorForm, TextValidator} from "react-material-ui-form-validator";
-import {SortableContainer, SortableElement} from 'react-sortable-hoc';
-import DraggableColorList from './DraggableColorList';
-import { arrayMove } from 'react-sortable-hoc';
-import chroma from "chroma-js";
-import PaletteFormNav from './PaletteFormNav';
-import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
-// https://www.npmjs.com/package/unique-names-generator
-
 
 class ColorPickerForm extends Component {
 
@@ -31,7 +14,7 @@ class ColorPickerForm extends Component {
 
     this.updateCurrentColor = this.updateCurrentColor.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
-this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
