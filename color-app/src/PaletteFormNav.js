@@ -13,6 +13,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 // https://www.npmjs.com/package/unique-names-generator
 
+import PaletteMetaForm from './PaletteMetaForm';
+
 const drawerWidth = 300;
 const styles = theme => ( {
 
@@ -48,20 +50,10 @@ const styles = theme => ( {
 class PaletteFormNav extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      newPaletteName: ''
-    }
-
-    this.handleFormChange = this.handleFormChange.bind(this);
+   
   }
-onSub
 
-  handleFormChange(e) {
-    this.setState({
 
-      [e.target.name]: e.target.value
-    });
-  }
 
   render() {
     const { classes, open } = this.props;
@@ -90,24 +82,8 @@ onSub
             
           </Toolbar>
           <div className={classes.navBtns}>
-            <ValidatorForm onSubmit={() => this.props.handleSubmit(this.state.newPaletteName)}>
-            <TextValidator 
-            value={this.state.newPaletteName}
-             label="Palette Name" 
-             onChange={this.handleFormChange}
-             name="newPaletteName"
-             validators={["required"]}
-             errorMessages={['Please enter a palette name']} />
-
-            <Button
-            type="submit" 
-            variant="contained" 
-            color="primary" 
-            >
-              Save palette
-              </Button>
-              
-              </ValidatorForm>
+            <PaletteMetaForm />
+            
               <Link to="/">
               <Button variant="contained" color="secondary">Go back</Button>
               </Link>
